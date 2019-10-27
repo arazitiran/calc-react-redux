@@ -1,25 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Calculator from './components/Calculator';
+import { createMuiTheme } from '@material-ui/core';
+import { ThemeProvider } from '@material-ui/styles'
+import { createStore } from 'redux'
+import { Provider, useSelector } from 'react-redux'
+import reducer from './reducers/calculatorReducer'
+const store = createStore(reducer)
+
+// All the following keys are optional, as default values are provided.
+const newTheme = createMuiTheme({
+  palette: {
+    primary: { main: '#81C784' },
+    secondary: { main: '#455A64' }
+  }
+});
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+    <ThemeProvider theme={newTheme}>
+      <div className="App">
+        <Calculator></Calculator>
+      </div>
+    </ThemeProvider>
+    </Provider>
   );
 }
 
